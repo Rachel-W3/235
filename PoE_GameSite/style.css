@@ -120,7 +120,7 @@ table{
     margin-top: 50px;
 }
 caption{
-    font-size: 60px;
+    font-size: 25px;
     padding: 10px;
     text-align: center;
 }
@@ -143,6 +143,9 @@ img.scion{
     display: block;
     margin: 0px auto;
 }
+th{
+    font-size: 15px;
+}
 th.col1{
     width: 120px;
 }
@@ -154,6 +157,9 @@ td.col1{
 }
 td.col2{
     width: 350px;
+}
+h3{
+    font-size: 15px;
 }
 ul.description{
     margin: 5px;
@@ -191,13 +197,17 @@ table.pros-cons{
     margin: 10px;
 }
 ul.details{
+    font-family: sans-serif;
     font-weight: normal;
-    font-size: 40px;
+    font-size: 20px;
     text-align: left;
     margin: 20px;
 }
+#content ol{
+    font-size: 20px;
+}
 h2.build-name{
-    font-size: 70px;
+    font-size: 20px;
     margin: 20px;
     margin-top: 50px;
 }
@@ -216,5 +226,5 @@ ul.links a:active {
     color: #ffffff;
 }
 ul.links{
-    font-size: 2em;
+    font-size: 15px;
 }
