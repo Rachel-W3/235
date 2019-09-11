@@ -36,33 +36,33 @@ header{
     margin: 0px auto;
     background-color: rgba(12, 11, 11, 0.8);
 }
-#nav {
-    margin: 40px 0px;
+nav {
+    padding: 20px 300px;
+    background-color: rgba(53, 42, 42, 0.5);
 }
-#nav li {
+nav li {
     float: left;
     font-size: 15px;
-    padding: 0px 30px;
+    padding: 0% 10%;
 }
-#nav ul {
+nav ul {
     list-style-type: none;
     overflow: hidden;
 }
-#nav a:link, 
-#nav a:visited {
+nav a:link, 
+nav a:visited {
     display: block;
     text-align: center;
     text-decoration: none;
     color: #b1a57a;
 }
-#nav a:hover, 
-#nav a:active {
+nav a:hover, 
+nav a:active {
     color: #ffffff;
 }
-content, #content{
+main{
     width: 860px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin: 50px;
 }
 p{
     margin: 0px;
@@ -109,119 +109,4 @@ h2.gameplay{
 }
 img.active-gems{
     padding: 0px;
-}
-/* Character-specific setup */
-table{
-    width: 860px;
-    border-collapse: collapse;
-    margin-top: 50px;
-}
-caption{
-    font-size: 25px;
-    padding: 10px;
-    text-align: center;
-}
-th{
-    font-size: 30px;
-    font-weight: normal;
-    border: 3px solid;
-}
-td{
-    border: 3px solid;
-}
-h3{
-    font-size: 35px;
-    text-align: center;
-    font-weight: normal;
-    margin-top: 0px;
-    margin-bottom: 5px;
-}
-img.scion{
-    display: block;
-    margin: 0px auto;
-}
-th{
-    font-size: 15px;
-}
-th.col1{
-    width: 120px;
-}
-th.col2{
-    width: 300px; /*col3 width = 440 --> ascendancy profile photos width = 140*/
-}
-td.col1{
-    width: 160px;
-}
-td.col2{
-    width: 350px;
-}
-h3{
-    font-size: 15px;
-}
-ul.description{
-    margin: 5px;
-    margin-left: -20px;
-    font-family: 'Calibri', 'Trebuchet MS', sans-serif;
-    font-size: 15px;
-    color: #6588ff
-}
-p.quote{
-    font-size: 10px;
-    text-indent: 0px;
-    text-align: center;
-    margin: 15px;
-    font-style: italic;
-}
-/* Ascendancy-specific setup*/
-table.scion{
-    width: 350px;
-    margin: 0px;
-}
-td.notable1, td.notable2{
-    border: 0px;
-}
-li.main{
-    font-weight: bold;
-    filter: brightness(150%);
-}
-/* Builds-specific setup */
-ol{
-    font-size: 4.5em;
-    text-align: center;
-}
-table.pros-cons{
-    width: 800px;
-    margin: 10px;
-}
-ul.details{
-    font-family: sans-serif;
-    font-weight: normal;
-    font-size: 20px;
-    text-align: left;
-    margin: 20px;
-}
-#content ol{
-    font-size: 20px;
-}
-h2.build-name{
-    font-size: 20px;
-    margin: 20px;
-    margin-top: 50px;
-}
-p a:link, 
-p a:visited,
-ul.links a:link,
-ul.links a:visited {
-    text-align: center;
-    text-decoration: none;
-    color: #6588ff;
-}
-p a:hover, 
-p a:active,
-ul.links a:hover,
-ul.links a:active {
-    color: #ffffff;
-}
-ul.links{
-    font-size: 15px;
 }
