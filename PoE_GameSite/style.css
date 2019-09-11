@@ -23,7 +23,7 @@ h1{
     margin: 0px;
     padding: 60px;
 }
-#header{
+header{
     height: 180px;
     background-image: url(images/builds_raider_frostblades_header.jpg),
                       url(images/builds_inquisitor_stormburst_header.jpg),
@@ -59,7 +59,7 @@ h1{
 #nav a:active {
     color: #ffffff;
 }
-#content{
+content, #content{
     width: 860px;
     margin-left: 50px;
     margin-right: 50px;
@@ -78,15 +78,12 @@ h2.gameplay{
     font-weight: normal;
     margin: 20px 0px;
 }
-#footer{
+footer{
     height: 50px;
     padding: 5px;
     margin: 20px;
     clear: both;
     text-align: center;
-}
-.footer{
-    font-size: 10px;
 }
 /* Homepage-specific setup*/
 h2.welcome{
