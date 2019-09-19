@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Dig Dug</title>
+    <style>
+        body {
+            max-width: 80vw;
+            margin: auto;
+            background-color: #FEC;
+            font-family: "Arial", "sans-serif"; 
+        }
+        header {
+            color: red;
+            font-family: sans-serif;
+            background-color: orange;
+            text-align: center;
+            padding: 10px;
+        }
+        main {
+            background-color: #facc6b;
+            padding: 3rem;
+            border: 3px solid #1e1464;
+        }
+        footer {
+            background-color: orange;
+            font-weight: bold;
+            padding: 20px;
+        }
+        h1 {
+            color: #1e1464;
+        }
+        blockquote {
+            background-color: lightgray;
+            padding: 1rem;
+        }
+        dt {
+            color: green;
+            font-weight: bold;
+            float: left;
+            clear: left;
+            width: 100px;
+            text-align: right;
+        }
+        dt::after {
+            content: ":";
+        }
+        dd {
+            margin: 0 0 0 110px;
+            padding: 0 0 0.5em 0;
+        }
+        img {
+            margin: 1vw 3vw;
+        }
+        div {
+            width: 60%;
+            margin: 0px auto;
+        }
+        h2{
+            color: darkgreen;
+            border-bottom: 1px solid blue;
+        }
+        h1, h2 {
+            font-family: 'Press Start 2P', cursive;
+            padding: 10px;
+        }
+        h2, footer{
+            text-align: center;
+        }
+        a {
+            font-weight: bold;
+        }
+        a:link, a:visited {
+            color: orangered;
+        }
+        a:focus, a:hover{
+            color: green;
+        }
+        a:active {
+            color: lightseagreen;
+        }
+        .list {
+            margin: 0px auto;
+            width: 250px;
+        }
+        #Para{
+            width: 80%;
+            margin: auto;
+        }
+        #review{
+            text-align: right;
+            margin-right: 3%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="images/dig-dug.png" alt="Dig Dug Logo">
+        <h1>(Dig Dug)</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Publishing Info</h2>
+            <ul class="list">
+                <li><b>Published by:</b> Atari, <abbr title="Incorporated">Inc.</abbr></li>
+                <li><b>Developed by:</b> Namco Limited</li>
+                <li><b>Released:</b> <abbr title="April 1982">Apr, 1982</abbr></li>
+            </ul>
+        </section>
+        <hr>
+        <section>
+            <h2>Description</h2>
+            <div>
+                <img src="images/dig-dug-burnt.png" alt="Dig Dug Burnt"> 
+                <img src="images/fygar_inflate.jpg" alt="Fygar Inflate">
+            </div>
+            <p id="Para">
+                Dig Dug is a 1-2 player arcade game in which you have to use your shovel to
+                dig your way through the earth. Stopping you from doing this are two monsters,
+                called Pooka and Fygar, who will continually chase you around. The only weapon
+                that you carry is an air pump, which you can use to inflate the monsters to the
+                point where they explode. 
+                [<a href="https://www.mobygames.com/game/dig-dug" target="_blank">Click here to read more</a>]
+            </p>
+        </section>
+        <hr>
+        <section>
+            <h2>Game Categories</h2>
+            <dl class="list">
+                <dt>Genre</dt>
+                    <dd>Action</dd>
+                <dt>Perspective</dt>
+                    <dd>Side view</dd>
+                <dt>Visual</dt>
+                    <dd>Fixed</dd>
+                <dt>Gameplay</dt>
+                    <dd>Arcade</dd>
+            </dl>
+        </section>
+        <hr>
+        <section>
+            <h2>Quote</h2>
+            <blockquote cite="https://www.mobygames.com/game/arcade/dig-dug">
+                This definitely goes under the heading of "Games That Were Made While a Programmer Was on Drugs,"
+                or at least had a good imagination. And maybe they were into horror movies too. 
+                <em> &nbsp;--The Atari Times</em>
+            </blockquote>
+            <p id="review" ><a href="https://www.mobygames.com/game/dig-dug/mobyrank" target="_blank">More reviews</a></p>
+        </section>
+    </main>
+    <footer>
+        <p>Rachel Wong and Allie Zhao</p>
+    </footer>
+</body>
+
+</html>
