@@ -1,0 +1,96 @@
+body{
+    background-color: rgba(204, 255, 255, 1);
+    background-image: url(images/background.jpg);
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+#container{
+    max-width: 760px;
+    margin: 0px auto;
+    border: 10px double skyblue;
+}
+
+#bio {
+    margin: 5vh 0px;
+    line-height: 2em;
+    background-color: rgba(73, 209, 255, 0.5);
+    padding: 10px;
+}
+
+main {
+    background-color: rgba(204, 255, 255, 0.5);
+    padding: 50px;
+}
+
+.links, p {
+    font-size: 14pt;
+    font-family: 'Arial', sans-serif;
+}
+
+.center {
+    text-align: center;
+}
+
+.links {
+    list-style-type: none;
+    line-height: 5vh;
+}
+
+a:link,
+a#special:visited {
+    color: #006400;
+    text-decoration: none;
+}
+
+a:visited {
+    color: rgb(100, 120, 148);
+}
+
+a:focus,
+a:hover,
+a#special:focus,
+a#special:hover {
+    font-weight: bold;
+    color: rgb(255, 183, 249);
+    border: 2px dotted white;
+    padding: 5px;
+}
+
+a#special{
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12pt;
+}
+
+header {
+    padding: 20px;
+    color: #09C;
+    font-family: 'Press Start 2P', cursive;
+}
+
+footer {
+    padding: 15px;
+    color: #006400;
+}
+
+h2 {
+    color: #09C;
+    font-family: 'Press Start 2P', cursive;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.left {
+    float: left;
+}
+
+#images {
+    width: 28vw;
+    margin: 0px auto;
+}
