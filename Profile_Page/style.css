@@ -8,7 +8,7 @@ body{
 }
 
 #container{
-    max-width: 760px;
+    max-width: 960px;
     margin: 0px auto;
     border: 10px double skyblue;
 }
@@ -23,6 +23,10 @@ body{
 main {
     background-color: rgba(204, 255, 255, 0.5);
     padding: 50px;
+}
+
+header, footer {
+    background-color: rgba(92, 217, 255, 0.3);
 }
 
 .links, p {
@@ -84,13 +88,4 @@ img {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-.left {
-    float: left;
-}
-
-#images {
-    width: 28vw;
-    margin: 0px auto;
 }
