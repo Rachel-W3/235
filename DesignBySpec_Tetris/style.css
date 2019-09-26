@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Convert the following to CSS Grid */
+header {
+    background-color: #2e3532;
+    height: 5vh;
+    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif; 
+    color: white;
+    padding: 20px;
+}
+
+h1 {
+    float: left;
+}
+
+nav {
+    float: right;    
+}
+
+nav li {
+    list-style-type: none;
+    display: block;
+    text-decoration: none;
+    padding: 0px 30px;
+}
