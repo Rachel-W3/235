@@ -109,11 +109,13 @@ main {
     line-height: 1.5;
 }
 
-/* #previews a:hover, #previews a:focus {
-    width: 260px;
-    height: 510px;
-    transition: width 0.5s, height 0.5s;
-} */
+#previews a:hover, #previews a:focus, #previews a:active {
+    transform: scale(1.05, 1.05);
+}
+
+#previews a:hover, #previews a:focus{
+    transition: transform 0.3s;
+}
 
 .desc-box {
     background-color: #bc0c06;
