@@ -2,9 +2,14 @@ body {
     font-family: Arial, sans-serif;
     margin: 0px;
     padding: 0px;
+    display: grid;
+    grid-template-areas:
+      "logo         menu         menu         menu"
+      "lifesize-img lifesize-img lifesize-img lifesize-img"
+      "playground playground"
+      "footer     footer";
 }
 
-/* Convert the following to CSS Grid */
 header {
     background-color: #2e3532;
     height: 5vh;
