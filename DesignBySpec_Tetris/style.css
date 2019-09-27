@@ -9,7 +9,7 @@ body {
       "main     main     main     main"
       "footer   footer   footer   footer";
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 100px 1800px 180px;
+    grid-template-rows: 100px 1750px 150px;
     background-color: black;
 }
 
@@ -44,9 +44,22 @@ a {
     text-decoration: none;
 }
 
+nav a {
+    padding: 35px 20px;
+}
+
 h1, nav a:link, nav a:visited {
     font-size: 30px;
     color: #FFF;
+}
+
+nav a:hover, nav a:focus, nav a:active {
+    color: #000;
+    background-color: #FFF;
+}
+
+nav a:hover, nav a:focus {
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 header img, h1 {
@@ -68,29 +81,14 @@ nav {
     padding-left: 42%;
 }
 
-nav li {
-    padding: 0px 20px;
-}
-
 main {
     background-color: #e0e2db;
 }
 
-#previews {
-    width: 1250px;
+#previews, #descriptions {
     margin: 55px 40px;
     display: flex;
     flex-wrap: nowrap;
-}
-
-#previews h2{
-    margin: 25px 20px 5px 20px;
-    color: #13295c;
-}
-
-#previews p {
-    margin: 15px 20px 5px 20px;
-    color: #2e3532;
 }
 
 .preview-box {
@@ -98,4 +96,49 @@ main {
     width: 250px;
     height: 500px;
     margin: 0px 15px;
+}
+
+.preview-box h2{
+    margin: 25px 20px 5px 20px;
+    color: #13295c;
+}
+
+.preview-box p {
+    margin: 15px 20px 5px 20px;
+    color: #2e3532;
+    line-height: 1.5;
+}
+
+/* #previews a:hover, #previews a:focus {
+    width: 260px;
+    height: 510px;
+    transition: width 0.5s, height 0.5s;
+} */
+
+.desc-box {
+    background-color: #bc0c06;
+    width: 550px;
+    height: 400px;
+    margin: 15px;
+}
+
+.desc-box h3, footer p{
+    font-size: 16pt;
+    margin: 40px;
+    color: #FFF;
+}
+
+.desc-box p {
+    margin: 40px;
+    color: #FFF;
+    line-height: 2.0;
+}
+
+.copyright {
+    float: left;
+}
+
+.college-name {
+    float: right;
+    text-align: right;
 }
