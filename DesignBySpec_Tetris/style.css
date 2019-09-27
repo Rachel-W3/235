@@ -1,34 +1,101 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0px;
+    margin: 0px auto;
     padding: 0px;
+    max-width: 1200px;
     display: grid;
     grid-template-areas:
-      "logo         menu         menu         menu"
-      "lifesize-img lifesize-img lifesize-img lifesize-img"
-      "playground playground"
-      "footer     footer";
-}
-
-header {
-    background-color: #2e3532;
-    height: 5vh;
-    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif; 
-    color: white;
-    padding: 20px;
+      "logo     menu     menu     menu"
+      "main     main     main     main"
+      "footer   footer   footer   footer";
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 100px 1800px 180px;
+    background-color: black;
 }
 
 h1 {
+    grid-area: logo;
+}
+
+ul {
+    grid-area: menu;
+}
+
+main {
+    grid-area: main;
+}
+
+footer {
+    grid-area: footer;
+}
+
+header, footer {
+    background-color: #2e3532;
+    font-family: Arial, sans-serif;
+    width: 1200px;
+    padding: 15px 0px;
+}
+
+header {
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1, nav a:link, nav a:visited {
+    font-size: 30px;
+    color: #FFF;
+}
+
+header img, h1 {
     float: left;
 }
 
+header img {
+    margin: -20px 0px;
+    padding-left: 40px;
+    padding-right: 10px;
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+}
+
 nav {
-    float: right;    
+    padding-left: 42%;
 }
 
 nav li {
-    list-style-type: none;
-    display: block;
-    text-decoration: none;
-    padding: 0px 30px;
+    padding: 0px 20px;
+}
+
+main {
+    background-color: #e0e2db;
+}
+
+#previews {
+    width: 1250px;
+    margin: 55px 40px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#previews h2{
+    margin: 25px 20px 5px 20px;
+    color: #13295c;
+}
+
+#previews p {
+    margin: 15px 20px 5px 20px;
+    color: #2e3532;
+}
+
+.preview-box {
+    background-color: #d2d4c8;
+    width: 250px;
+    height: 500px;
+    margin: 0px 15px;
 }
