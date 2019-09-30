@@ -49,6 +49,11 @@ ul.menu {
   padding: 10px;
   color: white;
   text-decoration: none;
+  transition: transform 0.1s ease-in, background-color 0.5s linear;;
+}
+
+.menu li {
+  width: 25%;
 }
 
 @media (max-width: 550px) {
@@ -59,7 +64,27 @@ ul.menu {
 
 .menu a:hover {
 	background: red;
-	color: yellow;
+  color: yellow;
+  transform: scale(1.1);
+}
+
+ul.menu ul li {
+  width:100%;
+}
+ul.menu ul {
+  display:none;
+}
+ul.menu li:hover ul {
+  display:flex;
+}
+
+.menu .submenu li>a {
+  background:red;
+  color:yellow;
+}
+.menu .submenu>a:after {
+  content: "+";
+  padding-left:5px;
 }
 
 #introduction { grid-area: intro; margin: 2rem;}
@@ -123,6 +148,64 @@ h1.game {
 p {
   margin-top: 0;
   margin-bottom: 1rem;
+}
+
+/* Creating interactive tetris playground grid */
+#tetgrid {
+  display: grid;
+  grid-template-columns: repeat(6, 100px);
+  grid-template-rows: repeat(6, 100px);
+}
+
+img {
+  transition-property: transform;
+  transition-duration: 2s;
+}
+
+img:hover {
+  transform: rotate(-90deg);
+}
+
+#o {
+  grid-column: 1/3;
+  grid-row: 1/span 2;
+}
+
+#i {
+  grid-column: 2/-1;
+  grid-row: 4/span 1;
+}
+
+#l {
+  grid-column: 3/6;
+  grid-row: 1/span 2;
+}
+
+#s {
+  grid-column: 3/6;
+  grid-row: 2/span 2;
+}
+
+#j {
+  grid-column: 1/3;
+  grid-row: 3/span 3;
+  transform: translate(50px, 55px) rotate(-90deg);
+}
+
+#z {
+  grid-column: 6/9;
+  grid-row: 1/span 2;
+}
+
+/* T-spin!!!! */
+#t {
+  grid-column: -3;
+  grid-row: 3/span 2;
+}
+
+#t img {
+  transform-origin: 153px 53px;
+  transform: rotate(90deg);
 }
 
 abbr[title],
