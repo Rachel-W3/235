@@ -18,13 +18,13 @@ Player motivation: Fly as high as you can while destroying as many meteroids bef
 
 ## V. Esthetics
 Graphics style - Vector or pixel art with saturated colors.
-Sound - 8-bit/pixel-style sound effects applied to movement and actions (i.e.: sound of meteors being destroyed, sound of flapping wings)
+Sound - 8-bit/pixel-style sound effects applied to movement and actions (i.e.: sound of meteors being destroyed, sound of flapping wings).
 
 ## VI. Gameplay
 ### Mechanics
 Player can perform dodge-rolls and spin-attacks
 ### Control
-* Keyboard only (arrow keys and spacebar)
+* Keyboard only (arrow keys and spacebar).
 * Use Left and Right arrows to move. 
 * Double tap Left or Right arrow keys to perform dodge-rolls.
 * Use Spacebar to perform spin-attacks.
