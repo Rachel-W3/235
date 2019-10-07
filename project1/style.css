@@ -93,7 +93,7 @@ footer {
     font-size: 12pt;
 }
 
-p, h3 {
+p, h3, ul {
     font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
@@ -101,13 +101,18 @@ h3 {
     font-size: 1.5em;
 }
 
-p {
-    font-size: 15pt;
+p, ul {
+    font-size: 18pt;
 }
 
 section {
     padding-bottom: 2em;
     border-bottom: 1px solid black;
+}
+
+hr {
+    border-color: black;
+    margin-top: 8vh;
 }
 
 @media screen and (max-width: 1300px) {
