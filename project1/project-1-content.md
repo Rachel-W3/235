@@ -38,7 +38,7 @@ Spamming dodge-rolls and spin-attacks will not work later on in the game. As the
 ![Gameplay mock-up](images/gameplay-mockup.png)
 
 ## VIII. Other
-N/A
+The art will mostly be hand-drawn on Photoshop, with the exception of background art.
 
 ## IX. About the developer
 The name's Rachel. I am a Game Design and Development student and I enjoy bringing things to life with C# and Unity, with the occasional assistance from more visual oriented software such as Photoshop and FireAlpaca (its website looks sketchy, but the software itself is free and very user-friendly. Would highly recommend for amateur artists).
