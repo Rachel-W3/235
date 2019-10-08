@@ -34,7 +34,8 @@ Instructions will be displayed next to the game canvas.
 Spamming dodge-rolls and spin-attacks will not work later on in the game. As the player flies higher, more meteors will whizz by. Since there will be a cooldown time applied to dodge-rolls and spin-attacks, the user must estimate the best time and position to utilize the different mechanics and avoid getting hit.
 
 ## VII. Screenshots
-Work in progress
+![Start screen mock-up](images/start-screen-mockup.png)
+![Gameplay mock-up](images/gameplay-mockup.png)
 
 ## VIII. Other
 N/A
