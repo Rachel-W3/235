@@ -24,7 +24,7 @@ header, footer {
     padding: 1%;
 }
 
-img.screenshot {
+img {
     width: 100%;
 }
 
@@ -68,7 +68,7 @@ nav a {
 
 nav li {
     float: left;
-    padding: 5vh 0px;
+    padding: 30px 0px;
 }
 
 nav a:link, nav a:visited {
@@ -112,7 +112,7 @@ section {
 
 hr {
     border-color: black;
-    margin-top: 8vh;
+    margin-top: 40px;
 }
 
 @media screen and (max-width: 1300px) {
@@ -129,5 +129,9 @@ hr {
 
     nav a {
         padding-right: 100%;
+    }
+
+    nav li {
+        padding: 5vh 0px;
     }
 }
