@@ -106,7 +106,7 @@ p, ul {
 }
 
 section {
-    padding-bottom: 2em;
+    padding: 2em 0px;
     border-bottom: 1px solid black;
 }
 

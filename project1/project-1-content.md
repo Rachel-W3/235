@@ -39,6 +39,7 @@ Spamming dodge-rolls and spin-attacks will not work later on in the game. As the
 
 ## VIII. Other
 The art will mostly be hand-drawn on Photoshop, with the exception of background art.
+Inspiration was drawn from Video Game High School, a webseries uploaded by the YouTube channel RocketJump. There is a scene in one of the episodes where a character creates a game that has an angel dodging meteors. I always thought that game looked very esthetically pleasing, and since the game was never actually created, I wish to bring this game to life.
 
 ## IX. About the developer
 The name's Rachel. I am a Game Design and Development student and I enjoy bringing things to life with C# and Unity, with the occasional assistance from more visual oriented software such as Photoshop and FireAlpaca (its website looks sketchy, but the software itself is free and very user-friendly. Would highly recommend for amateur artists).
