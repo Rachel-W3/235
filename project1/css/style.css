@@ -1,6 +1,6 @@
 body {
-    background-color: #7fc9ee;
-    background-image: url(images/blue-skies-background.jpg);
+    background-color: #163A54;
+    background-image: url(../images/blue-skies-background.jpg);
     background-repeat: no-repeat;
     background-position: right top;
     background-attachment: fixed;
@@ -51,7 +51,7 @@ a {
 nav {
     background-color: #c8e3f8;
     height: auto;
-    padding: 0px 2.5vw;
+    padding: 0px 2vw;
 }
 
 nav ul {
