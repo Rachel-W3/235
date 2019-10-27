@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Random Phrases</title>
+    <style>
+        html {
+            font-family: 'Arial', 'Helvetica', 'sans-serif';
+            background-color: #112230;
+            color: white;
+            padding: 10px;
+        }
+        body {
+            max-width: 800px;
+            margin: 10px auto;;
+            padding-top: 20px;
+            background-color: #555;
+            background-image: url('hackathon.jpg');
+            border: 10px solid rgb(31, 59, 102);
+            border-radius: 20px;
+            font-size: 2em;
+            color: #fff;
+        }
+        header {
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            text-shadow: 5px 5px #000;
+            background-color: #005ca762;
+        }
+        main {
+            width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        footer {
+            margin: 10px 1em;
+            font-size: 0.8em;
+        }
+
+        @media screen and (min-width: 480px){
+            main{
+                min-height: 100px;
+                margin-top: 10vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hackathon Quotes</h1>
+    </header>
+    <main>
+        <!-- <p>I totally did this assignment in a hackathon.</p> -->
+    </main>
+    <footer>
+        <p>Copyright &copy; 2019 Rachel Wong</p>
+    </footer>
+<script>
+"use strict";
+
+let phrases = ["I had insomnia cookies for breakfast, lunch, and dinner.",
+               "Sleep? I haven't had any of that in the last 36 hours.",
+               "I came here for the free swag and food.",
+               "I don't need sleep, I need answers.",
+               "I totally did this assignment in a hackathon."];
+
+let main = document.querySelector("main");
+let p = document.createElement("p");
+let randomInt = Math.floor(Math.random() * phrases.length);
+let randomPhrase = phrases[randomInt];
+p.innerHTML = randomPhrase;
+main.appendChild(p);
+
+</script>
+</body>
+</html>
