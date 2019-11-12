@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Random Phrases</title>
+    <style>
+        html {
+            font-family: 'Arial', 'Helvetica', 'sans-serif';
+            background-color: #112230;
+            color: white;
+            padding: 10px;
+        }
+        body {
+            max-width: 800px;
+            margin: 10px auto;
+            background-color: #555;
+            background-image: url('hackathon.jpg');
+            border: 10px solid #153E7C;
+            border-radius: 20px;
+            font-size: 2em;
+            color: #fff;
+        }
+        header {
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            text-shadow: 5px 5px #000;
+            background-color: #005ca762;
+        }
+        main {
+            width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        footer {
+            margin: 10px 1em;
+            font-size: 0.5em;
+        }
+        button {
+            background-color: #153E7C;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            text-align: center;
+            display: block;
+            font-size: 16px;
+            margin: 0px auto;
+            cursor: pointer;
+        }
+
+        @media screen and (min-width: 480px){
+            main{
+                height: 200px;
+                margin-top: 5vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hackathon Quotes</h1>
+    </header>
+    <main>
+        <button>More Quotes</button>
+        <!-- 
+            This quote is intentionally the first one to appear
+            every time the page is reloaded 
+        -->
+        <p>I totally did this assignment in a hackathon.</p>
+    </main>
+    <footer>
+        <p>Copyright &copy; 2019 Rachel Wong</p>
+    </footer>
+<script>
+"use strict";
+
+let phrases = ["I had insomnia cookies for breakfast, lunch, and dinner.",
+               "Sleep? I haven't had any of that in the last 36 hours.",
+               "I came here for the free swag and food.",
+               "I don't need sleep, I need answers.",
+               "I totally did this assignment in a hackathon."];
+
+function generateQuote() {
+    let p = document.querySelector("p");
+    let randomInt = Math.floor(Math.random() * phrases.length);
+    let randomPhrase = phrases[randomInt];
+    p.innerHTML = randomPhrase;
+}
+
+let buttonClicked = (e) => {
+    this.generateQuote();
+}
+
+let clickableButton = document.querySelector("button").onclick = buttonClicked;
+
+</script>
+</body>
+</html>
