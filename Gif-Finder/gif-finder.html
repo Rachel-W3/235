@@ -111,7 +111,7 @@
 		const GIPHY_URL = "https://api.giphy.com/v1/gifs/search?";
 
 		// 2 - Public API key from https://developers.giphy.com/docs/
-		let GIPHY_KEY = "dc6zaTOxFJmzC";
+		let GIPHY_KEY = "dc6zaTOxFJmzC"; // Backup: NefRQlH1IW2vpY9JJu07vk2yKDffnRha
 
 		// 3 - Building up our own URL string
 		let url = GIPHY_URL;
@@ -142,8 +142,79 @@
 
 		// 11 - shows what the url looks like in console
 		console.log(url);
+
+		// 12 Request data!
+		getData(url);
 	}
 	
+	function getData(url){
+		// 1 - create a new XHR object
+		let xhr = new XMLHttpRequest();
+
+		//2 - set the onload handler
+		xhr.onload = dataLoaded;
+
+		//3 - set the onerror handler
+		xhr.onerror = dataError;
+
+		//4 - open connection and send the request
+		xhr.open("GET", url);
+		xhr.send();
+	}
+
+	function dataLoaded(e) {
+		//5 - event.target is the xhr object
+		let xhr = e.target;
+
+		//6 - xhr.responseText is the JSON file we just downloaded
+		console.log(xhr.responseText);
+
+		//7 - turn the text into a parsable JS object
+		let obj = JSON.parse(xhr.responseText);
+
+		//8 - if there are no results, print a message and return
+		if(!obj.data || obj.data.length == 0) {
+			document.querySelector("#status").innerHTML = "<b>No Results found for'" + displayTerm + "'</b>";
+		}
+
+		//9 - Start building an HTML string we will display to the user
+		let results = obj.data;
+		console.log("results.length = " + results.length);
+		let bigString = "<p><i>Heare are " + results.length + " results for '" + displayTerm + "'</i></p>";
+
+		//10 - loop through the array of results
+		for(let i = 0; i < results.length; i++){
+			let result = results[i];
+			
+			//11 - get the URL to th GIF
+			let smallURL = result.images.fixed_width_small.url;
+			if(!smallURL) smallURL = "images/no-image-found.png";
+
+			//12 - get the URL to the GIPHY page
+			let url = result.url;
+
+			//13 - Build a <div> to hold each result with ES6 String templating
+			let line = `<div class='result'><img src='${smallURL}' title= '${result.id}' />`;
+			line += `<span><a target='_blank' href='${url}'>View on Giphy</a></span></div>`;
+
+			//14 - Another way to do that^
+			// var line = "<div class='result'>";
+			// 	line += "<img src='";
+			// 	line += smallURL;
+			// 	line += "' title= '";
+			// 	line += result.id;
+			// 	line += "' />'";
+
+			// 	line += "<span><a target='_blank' href='" + url + "'>View on Giphy</a></span></div>";
+			// 	line += "</div>";
+
+			//15 - add the <div> 
+		}
+	}
+
+	function dataError(e) {
+		console.log("An error occurred.");
+	}
   </script>
 
   
