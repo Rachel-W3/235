@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+ 	<title>Giphy Finder</title>
+ 	<style>
+		*{
+			font-family:verdana,tahoma,sans-serif;
+		}
+	
+ 		header{
+ 			background: url(images/cats.jpg);
+ 			height:195px;
+ 		}
+ 		
+ 		header h1{
+ 			margin:0;
+ 			color:blue;
+ 			text-align:center;
+ 			font-size:100px;
+ 			padding-top: 35px;
+ 		}
+ 		
+ 		#status{
+ 			font-style: italic;
+ 			height:32px;
+ 		}
+ 		
+ 		.result {
+			position: relative;
+			height: 175px;
+			width: 100px;
+			float:left;
+			border:1px solid gray;
+			padding:5px;
+			margin-left:10px;
+			margin-bottom:10px;
+		}
+
+		.result img {
+			position: absolute;
+			left: 5px;
+			bottom: 5px;
+			display:block;
+			
+		}
+		
+		.result span{
+			font-size:12px;
+			font-weight:bold;
+			display:block;
+		}
+		
+		.result audio{
+			width: 130px;
+		}
+		
+		button{
+		  display : inline-block;
+		  cursor : pointer;
+  
+		  border-style : solid;
+		  border-width : 1px;
+		  border-radius : 50px;
+		  padding : 10px 18px;
+		  box-shadow : 0 1px 4px rgba(0,0,0,.6);
+		  font-size : 9.5pt;
+		  font-weight : bold;
+		  color : #fff;
+		  text-shadow : 0 1px 3px rgba(0,0,0,.4);
+		  font-family : sans-serif;
+		  text-decoration : none;
+		}
+		
+		button.green{
+			border-color: #8fc800;
+	  		background: #8fc800;
+	  		background: linear-gradient(top, #8fc800 0%,#438c00 100%);
+		}
+		
+		button:hover{
+			background: #8fDD00;
+		}
+		
+		button:active{
+			background: #8fFF00;
+			box-shadow : 0 0 6px rgba(0,0,0,.6);
+		}
+		
+		button:focus {outline:0;}
+		
+		.widgets{
+			margin-top: 1em;
+			margin-bottom:1em;
+		}
+		
+ 	</style>
+
+  <script>
+    // 1
+  	window.onload = (e) => {document.querySelector("#search").onclick = searchButtonClicked};
+	
+	// 2
+	let displayTerm = "";
+	
+	// 3
+	function searchButtonClicked(){
+		console.log("searchButtonClicked() called");
+		
+		// 1
+		const GIPHY_URL = "https://api.giphy.com/v1/gifs/search?";
+
+		// 2 - Public API key from https://developers.giphy.com/docs/
+		let GIPHY_KEY = "dc6zaTOxFJmzC";
+
+		// 3 - Building up our own URL string
+		let url = GIPHY_URL;
+		url += "api_key=" + GIPHY_KEY;
+
+		// 4 - Parsing user entered term for searching
+		let term = document.querySelector("#searchterm").value;
+		displayTerm = term;
+
+		// 5 - Getting rid of leading and trailing spaces
+		term = term.trim();
+
+		// 6 - encoding spaces and special characters
+		term = encodeURIComponent(term);
+
+		// 7 - if there's no term to search then exit the function
+		if (term.length < 1) return;
+
+		// 8 - append the search term to the URL (named 'q')
+		url += "&q=" + term;
+
+		// 9 - grab the user chosen search 'limit' from <select> and append it to URL
+		let limit = document.querySelector("#limit").value;
+		url += "&limit=" + limit;
+
+		// 10 - updating the UI
+		document.querySelector("#status").innerHTML = "<b>Searching for '" + displayTerm + "'</b>";
+
+		// 11 - shows what the url looks like in console
+		console.log(url);
+	}
+	
+  </script>
+
+  
+</head>
+<body>
+<header>
+	<h1>Giphy Finder</h1>
+</header>
+
+<div class="widgets">
+	Search Term -> 
+	<input id="searchterm" type="text" size="20" maxlength="20" autofocus value="cats" />
+</div>
+
+<div class="widgets">
+	Max # results -> 
+	<select id="limit">
+		<option value="5">5</option>
+		<option value="10" selected>10</option>
+		<option value="25">25</option>
+		<option value="50">50</option>
+		<option value="100">100</option>
+	</select>
+</div>
+
+<div class="widgets">
+	<button type="button" id="search" class="green">Find some GIFs!<br />:-)</button>
+</div>
+<div id="status">Ready to Search!</div>
+<hr>
+
+<h2>Results</h2>
+<div id="content">
+	<p>No data yet!</p>
+</div>
+ 
+
+</body>
+</html>
