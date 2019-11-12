@@ -197,19 +197,26 @@
 			let line = `<div class='result'><img src='${smallURL}' title= '${result.id}' />`;
 			line += `<span><a target='_blank' href='${url}'>View on Giphy</a></span></div>`;
 
-			//14 - Another way to do that^
+			//14 - Another way to do that^ (confirmed that it works)
 			// var line = "<div class='result'>";
 			// 	line += "<img src='";
 			// 	line += smallURL;
 			// 	line += "' title= '";
 			// 	line += result.id;
-			// 	line += "' />'";
+			// 	line += "' />";
 
 			// 	line += "<span><a target='_blank' href='" + url + "'>View on Giphy</a></span></div>";
 			// 	line += "</div>";
 
-			//15 - add the <div> 
+			//15 - add the <div> to 'bigString' and loop
+			bigString += line;
 		}
+
+		//16 - all done building HTML - now show it to the user!
+		document.querySelector("#content").innerHTML = bigString;
+
+		//17 - update the status
+		document.querySelector("#status").innerHTML = "<b>Success!</b>";
 	}
 
 	function dataError(e) {
