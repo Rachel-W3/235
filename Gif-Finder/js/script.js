@@ -96,9 +96,22 @@ function dataLoaded(e) {
         let url = result.url;
 
         let rating = (result.rating ? result.rating : "NA").toUpperCase();
+        let rating_color = "#fff";
+        if (rating == 'G') {
+            rating_color = 'green';
+        }
+        else if(rating == 'PG'){
+            rating_color = 'blue';
+        }
+        else if(rating == 'PG-13'){
+            rating_color = 'purple';
+        }
+        else {
+            rating_color = 'red';
+        }
         
         //13 - Build a <div> to hold each result with ES6 String templating
-        let line = `<div class='result'><img src='${smallURL}' title= '${result.id}' />`;
+        let line = `<div class='result ${rating_color}'><img src='${smallURL}' title= '${result.id}' />`;
         line += `<span><a target='_blank' href='${url}'>View on Giphy</a></span>`;
         line += `<p> Rating: ${rating}</p>`;
         line += `</div>`;
