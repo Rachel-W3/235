@@ -6,6 +6,11 @@
 </head>
 <body>
 
+<div>
+	<button id="move">Move</button>
+	<button id="rotate">Rotate</button>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.6.0/pixi.min.js"></script>
 <script>
 
@@ -16,8 +21,58 @@ const app = new PIXI.Application(600,400);
 // #2 - Append its "view" (a <canvas> tag that it created for us) to the DOM
 document.body.appendChild(app.view);
 
-// #3 - Change background color
-app.renderer.backgroundColor = 0xff00;
+// #3 - Creating a square
+const square = new PIXI.Graphics();
+square.beginFill(0xff0000);
+square.lineStyle(3, 0xffff00, 1); // Border is within the dimensions of rectangle
+square.drawRect(-20, -20, 40, 40); // -20 starting position
+square.endFill();
+square.x = 25; // -20 + 25
+square.y = 50;
+app.stage.addChild(square);
+
+// #4 - Creating a circle
+let radius = 20;
+const circle = new PIXI.Graphics();
+circle.beginFill(0xff0000);
+circle.drawCircle(0, 0, radius);
+circle.endFill();
+circle.x = 125;
+circle.y = 50;
+app.stage.addChild(circle);
+
+// #5 - Making horizontal line across the screen
+const line = new PIXI.Graphics();
+line.lineStyle(4, 0xff0000, 1);
+line.moveTo(0, 0);
+line.lineTo(590, 0);
+line.x = 5;
+line.y = 100;
+app.stage.addChild(line);
+
+// #6 - Making a triangle
+const poly = new PIXI.Graphics();
+poly.lineStyle(3, 0x00ff00, 1);
+poly.beginFill(0xff00ff);
+poly.moveTo(0, 0);
+poly.lineTo(-100, 100);
+poly.lineTo(100, 100);
+poly.lineTo(0, 0);
+poly.x = 125;
+poly.y = 125;
+app.stage.addChild(poly);
+
+// #7 target shapes with button DOM events
+document.querySelector("#move").onclick = e=>{square.x+=10;circle.x+=10;line.x+=10;poly.x+=10;};
+document.querySelector("#rotate").onclick = e=>{
+	let amt = Math.PI/6; // 30 degrees
+	square.rotation += amt;
+	line.rotation += amt;
+	poly.rotation += amt;
+	// we can't see the rotation of the circle, so let's scale it up instead
+	circle.width += 5;
+	circle.height += 5;
+};
 
 </script>
 </body>
