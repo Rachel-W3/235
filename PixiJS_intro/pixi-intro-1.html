@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>PixiJS-1</title>
+</head>
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.6.0/pixi.min.js"></script>
+<script>
+
+// #1 - Create a new Pixi application
+// http://pixijs.download/dev/docs/PIXI.Application.html
+const app = new PIXI.Application(600,400);
+
+// #2 - Append its "view" (a <canvas> tag that it created for us) to the DOM
+document.body.appendChild(app.view);
+
+// #3 - Change background color
+app.renderer.backgroundColor = 0xff00;
+
+</script>
+</body>
+</html>
