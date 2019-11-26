@@ -142,16 +142,16 @@ hr {
 .result {
     background-color: rgb(40, 40, 40);
     width: 20vw;
-    margin: 5vh auto;
+    margin: 5vh 1vw;
     padding: 0px;
     border-radius: 20px;
 }
 
 .result img{
     width: 20vw;
-    height: 200px;
+    height: 150px;
     overflow: hidden;
-    margin: auto;
+    /* margin: auto; */
     border-radius: 20px 20px 0px 0px;
 }
 
@@ -193,4 +193,41 @@ footer {
     font-size: 1.5em;
     padding: 50px;
     background-color: #171717;
+}
+
+@media only screen and (max-width: 600px)  {
+    #container{
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-areas: 
+        "header"
+        "sidenav"
+        "content"
+        "footer";
+    }
+    header{
+        font-size: 10px;
+    }
+    #searchterm{
+    width:90%;
+    margin: 50px 0px;
+    }
+    #flex-container {
+        display: inline;
+    }
+
+    .result {
+        background-color: rgb(40, 40, 40);
+        width: 80%;
+        margin: auto;
+        border-radius: 20px;
+    }
+    .result img{
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        margin: auto;
+        border-radius: 20px 20px 0px 0px;
+    }
+
 }

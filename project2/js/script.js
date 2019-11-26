@@ -60,7 +60,7 @@ $(document).ready(function () {
 });
 
 let minRating = 0;
-let loadedResults = [];
+let loadedResults = []; // Maybe delete this
 let previousSearch = [];
 
 function jsonLoaded(obj) 
@@ -68,7 +68,7 @@ function jsonLoaded(obj)
     console.log(obj);
     loadedResults = obj.results;
     
-    filterByRating();
+    filterResults();
 }
 
 function getMinRating() {
@@ -91,20 +91,107 @@ function getMinRating() {
     return 5;
 }
 
-function checkRating(result) {
-    return result.rating >= minRating;
+function getCheckedCheckboxes() {
+    let checkboxes = document.getElementsByClassName("platform-filter");
+    let checked = [];
+
+    for(let i = 0; i < checkboxes.length; i++) {
+        if(checkboxes[i].checked) {
+            checked.push(checkboxes[i]);
+        }
+    }
+
+    return checked;
 }
 
-function filterByRating() {
+function filterResults() {
     minRating = getMinRating();
-    let filteredResults = loadedResults.filter(checkRating);
+    let checkedBoxes = getCheckedCheckboxes();
+    let filteredResults = [];
+    let platforms = [];
+    
+    for(let i = 0; i < loadedResults.length; i++) {
+        let result_passed = false;
+
+        // filtering by rating
+        if(loadedResults[i].rating < minRating) {
+            continue;
+        }
+        // -----------------------------------------------------------------------------------
+
+        // filtering by platform/console
+        if(checkedBoxes.length == 0) {
+            filteredResults.push(loadedResults[i]); // if no boxes are checked, every result gets added to the list
+            continue;
+        }
+        for(let j = 0; j < checkedBoxes.length; j++) {
+            for(let k = 0; k < loadedResults[i].platforms.length; k++) {
+                if(loadedResults[i].platforms[k].platform.name == checkedBoxes[j].value) {
+                    result_passed = true;
+                }
+            }
+        }
+        // -----------------------------------------------------------------------------------
+
+        // Push results that passed the filters into new array
+        if (result_passed) {
+            console.log(loadedResults[i].platforms);
+            filteredResults.push(loadedResults[i]);
+        }
+        // -----------------------------------------------------------------------------------
+    }
+
+    // Sort filtered results by highest ratings if checkbox is checked
+    let sort_checkbox = document.getElementById("sort-filter");
+    if(sort_checkbox.checked) {
+        let orderedResults = filteredResults.sort(compareRatings);
+        draw(orderedResults);
+        return;
+    }
+
+    draw(filteredResults);
+}
+
+function compareRatings(first,second) {
+    if (first.rating == second.rating) {
+        return 0;
+    }
+    if (first.rating < second.rating) {
+        return 1;
+    }
+    return -1;
+}
+
+function draw(results){
     let line = `<div id='flex-container'>`;
 
-    for (let i = 0; i < filteredResults.length; i++) {
-        let result = filteredResults[i];
+    if (results.length == 0) {
+        line += `<p>No results were found. Try changing the filter specifications.</p>`
+        line += `</div>`; /* closing flex-container div */
+        document.querySelector("#content").innerHTML = line;
+        return;
+    }
+
+    for (let i = 0; i < results.length; i++) {
+
+        let result = results[i];
         let name = result.name;
         let imgURL = result.background_image;
         let rating = result.rating;
+        let platformCount = result.platforms;
+        let platformString = `<p>Platforms: `;
+        let otherString = ``;
+
+        if(result.platforms.length > 3) {
+            platformCount = 3; // Cap the number of platforms to display
+            otherString = `Other...`;
+        }
+
+        for(let j = 0; j < platformCount; j++) {
+            platformString += `${result.platforms[j].platform.name}, `;
+        }
+
+        platformString += otherString;
 
         if(imgURL == null){
             imgURL = 'http://placehold.it/250x250';
@@ -114,6 +201,7 @@ function filterByRating() {
         line += `<img class='preview-image' src='${imgURL}' title= '${result.id}' />`;
         line += `<p class='game-name'>${name}</p>`;
         line += `<p>Ratings: ${rating}</p>`;
+        line += platformString;
         line += `</div>`;
 
     }
