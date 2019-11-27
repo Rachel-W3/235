@@ -129,7 +129,6 @@ hr {
 
 #content {
     background-color: #12080999;
-    /* background: url('images/wooden_background.jpg') no-repeat center center; */
     background-size: cover;
     padding: 2vw;
 }
@@ -151,7 +150,6 @@ hr {
     width: 20vw;
     height: 150px;
     overflow: hidden;
-    /* margin: auto; */
     border-radius: 20px 20px 0px 0px;
 }
 
@@ -181,10 +179,8 @@ h3 {
 
 .preview-image {
     width: 19vw;
-    /* margin: auto; */
     display: block;
     justify-content: center;
-    /* transition-duration: 0.3s; */
 }
 
 footer {
@@ -195,7 +191,7 @@ footer {
     background-color: #171717;
 }
 
-@media only screen and (max-width: 600px)  {
+@media only screen and (max-width: 1200px)  {
     #container{
         display: grid;
         grid-template-columns: auto;

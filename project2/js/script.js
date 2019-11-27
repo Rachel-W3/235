@@ -9,6 +9,12 @@ function init(){
         event.preventDefault();
     });
     document.querySelector("#search").onclick = getData;
+    if(localStorage.getItem('lastKey') !==null){
+        document.getElementById("searchterm").value = localStorage.getItem('lastKey');
+    }else{
+
+        document.getElementById("searchterm").placeholder= "Enter a game title";
+    }
 }
 
 let term = ""; // we declared `term` out here because we will need it later
@@ -24,7 +30,16 @@ function getData(){
     
     // 3 - parse the user entered term we wish to search
     term = document.querySelector("#searchterm").value;
+
+
+    //local storage
+    // Put the object into storage
+    localStorage.setItem('lastKey', term);
     
+    // Retrieve the object from storage
+    document.getElementById("searchterm").placeholder = localStorage.getItem('lastKey');
+    console.log(localStorage.getItem('lastKey'));
+
     // get rid of any leading and trailing spaces
     term = term.trim();
     // encode spaces and special characters
@@ -36,15 +51,7 @@ function getData(){
     
     // 5- call the web service, and prepare to download the file
     $.ajax({
-        //method: "GET",
         dataType: "json",
-        // async: true,
-        // crossDomain:true,
-        // headers: {
-        // 	'Access-Control-Allow-Origin':'*',
-        // 	Accept: 'application/json',
-        // 	'Content-Type': 'application/json',
-        // },
         url: url,
         data: null,
         success: jsonLoaded
@@ -60,8 +67,7 @@ $(document).ready(function () {
 });
 
 let minRating = 0;
-let loadedResults = []; // Maybe delete this
-let previousSearch = [];
+let loadedResults = [];
 
 function jsonLoaded(obj) 
 {
@@ -209,8 +215,4 @@ function draw(results){
     line += `</div>`; /* closing flex-container div */
     
     document.querySelector("#content").innerHTML = line;
-}
-
-function showPreviousTerms() {
-    console.log("hello");
 }
