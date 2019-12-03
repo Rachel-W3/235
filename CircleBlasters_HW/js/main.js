@@ -69,6 +69,7 @@ function setup() {
 	// #7 - Load sprite sheet
 		
 	// #8 - Start update loop
+    app.ticker.add(gameLoop);
 	
 	// #9 - Start listening for click events on the canvas
 	
@@ -191,4 +192,44 @@ function decreaseLifeBy(value) {
     life -= value;
     life = parseInt(life);
     lifeLabel.text = `Life      ${life}%`;
+}
+
+function gameLoop(){
+	// if (paused) return; // keep this commented out for now
+	
+	// #1 - Calculate "delta time"
+    let dt = 1/app.ticker.FPS;
+    if (dt > 1/12) dt=1/12;
+	
+	// #2 - Move Ship
+    let mousePosition = app.renderer.plugins.interaction.mouse.global;
+    // ship.position = mousePosition;
+
+    let amt = 6 *dt; // at 60 fps would move about 10% of distance per update
+	
+    let newX = lerp(ship.x, mousePosition.x, amt);
+    let newY = lerp(ship.y, mousePosition.y, amt);
+
+    // keep the ship on the screen with clamp()
+    let w2 = ship.width/2;
+    let h2 = ship.height/2;
+    ship.x = clamp(newX, 0 + w2, sceneWidth - w2);
+    ship.y = clamp(newY, 0 + h2, sceneHeight - h2);
+
+    // #3 - Move Circles
+	
+	
+	// #4 - Move Bullets
+
+	
+	// #5 - Check for Collisions
+	
+	
+	// #6 - Now do some clean up
+	
+	
+	// #7 - Is game over?
+	
+	
+	// #8 - Load next level
 }
