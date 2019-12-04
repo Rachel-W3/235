@@ -1,9 +1,6 @@
 body {
     background-color: #163A54;
-    background-image: url(../images/blue-skies-background.jpg);
-    background-repeat: no-repeat;
-    background-position: right top;
-    background-attachment: fixed;
+    background: url(../images/blue-skies-background-dark.jpg) no-repeat right top fixed;
     background-size: cover;
 }
 
@@ -12,6 +9,10 @@ body {
     margin: 0px auto;
     border: 10px double skyblue;
 }
+/* 
+#wrapper img {
+
+} */
 
 main {
     background-color: rgba(164, 210, 243, 0.7);
@@ -61,7 +62,7 @@ nav ul {
 }
 
 nav a {
-    padding: 4vh 3rem;
+    padding: 10vh 3.5rem;
     font-size: 15pt;
     text-align: center;
 }
@@ -138,7 +139,7 @@ hr {
     }
 
     nav a {
-        padding: 1rem;
+        padding: 0.8rem;
         padding-right: 100vw;
     }
 
