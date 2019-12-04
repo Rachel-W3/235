@@ -7,10 +7,10 @@ const sceneWidth = app.view.width;
 const sceneHeight = app.view.height;	
 
 // pre-load the images
-PIXI.loader.
-add(["images/Spaceship.png","images/explosions.png"]).
-on("progress",e=>{console.log(`progress=${e.progress}`)}).
-load(setup);
+// PIXI.loader.
+// add(["images/Spaceship.png","images/explosions.png"]).
+// on("progress",e=>{console.log(`progress=${e.progress}`)}).
+// load(setup);
 
 // aliases
 let stage;
@@ -81,8 +81,8 @@ function setup() {
 function createLabelsAndButtons() {
     let buttonStyle = new PIXI.TextStyle({
         fill: 0xFF0000,
-        fontSize: 48,
-        fontFamily: "Verdana"
+        fontSize: 20,
+        fontFamily: 'Press Start 2P'
     });
 
     // 1 - set up 'startScene'
@@ -90,8 +90,8 @@ function createLabelsAndButtons() {
     let startLabel1 = new PIXI.Text("Circle Blast!");
     startLabel1.style = new PIXI.TextStyle({
         fill: 0xFFFFFF,
-        fontSize: 96,
-        fontFamily: "Verdana",
+        fontSize: 40,
+        fontFamily: 'Press Start 2P',
         stroke: 0xFF0000,
         strokeThickness: 6
     });
@@ -103,8 +103,8 @@ function createLabelsAndButtons() {
     let startLabel2 = new PIXI.Text("R U worthy..?");
     startLabel2.style = new PIXI.TextStyle({
         fill: 0xFFFFFF,
-        fontSize: 32,
-        fontFamily: "Verdana",
+        fontSize: 18,
+        fontFamily: 'Press Start 2P',
         fontStyle: "italic",
         stroke: 0xFF0000,
         strokeThickness: 6
@@ -129,7 +129,7 @@ function createLabelsAndButtons() {
     let textStyle = new PIXI.TextStyle({
         fill: 0xFFFFFF,
         fontSize: 18,
-        fontFamily: "Press Start 2P",
+        fontFamily: 'Press Start 2P',
         stroke: 0xFF0000,
         strokeThickness: 4
     });
@@ -152,11 +152,11 @@ function createLabelsAndButtons() {
 
     // 3 - set up `gameOverScene`
     // 3A - make game over text
-    let gameOverText = new PIXI.Text("Game Over!\n        :-O");
+    let gameOverText = new PIXI.Text("Game Over!\n   :-O");
     textStyle = new PIXI.TextStyle({
         fill: 0xFFFFFF,
-        fontSize: 64,
-        fontFamily: "Press Start 2P",
+        fontSize: 42,
+        fontFamily: 'Press Start 2P',
         stroke: 0xFF0000,
         strokeThickness: 6
     });
@@ -181,8 +181,8 @@ function createLabelsAndButtons() {
     gameOverScoreLabel = new PIXI.Text();
     gameOverScoreLabel.style = new PIXI.TextStyle({
         fill: 0xFFFFFF,
-        fontSize: 40,
-        fontFamily: "Press Start 2P",
+        fontSize: 20,
+        fontFamily: 'Press Start 2P',
         stroke: 0xFF0000,
         strokeThickness: 6,
         fontStyle: "italic",
@@ -324,17 +324,36 @@ function decreaseLifeBy(value) {
 }
 
 function createCircles(numCircles) {
-    for (let i = 0; i < numCircles; i++) {
+    // standard bouncing circles
+    for (let i = 0; i < numCircles / 2; i++) {
         let c = new Circle(10, 0xFFFF00);
         c.x = Math.random() * (sceneWidth - 50) + 25;
         c.y = Math.random() * (sceneHeight - 400) + 25;
         circles.push(c);
         gameScene.addChild(c);
     }
+
+    // orthogonal circles
+    for (let i = 0; i < numCircles / 2; i++) {
+        let c = new Circle(10, 0x00FFFF);
+        c.speed = Math.random() * 100 + 100;
+        if (Math.random() < 0.5) {
+            c.x = Math.random() * (sceneWidth - 50) + 25;
+            c.y = Math.random() * 100 + c.radius;
+            c.fwd = {x: 0, y: 1};
+        }
+        else {
+            c.x = Math.random() * 25 + c.radius;
+            c.y = Math.random() * (sceneHeight - 80) - c.radius;
+            c.fwd = {x: 1, y: 0};
+        }
+        circles.push(c);
+        gameScene.addChild(c);
+    }
 }
 
 function loadLevel() {
-    createCircles(levelNum * 5);
+    createCircles(levelNum * 8);
 	paused = false;
 }
 
@@ -347,7 +366,7 @@ function fireBullet(e) {
 
     let offset = 10;
 
-    if (score >= 5) {
+    if (levelNum >= 2) {
         for (let i = -1; i <= 1; i++) {
             let b = new Bullet(0xFFFFFF, ship.x + (offset * i), ship.y);
             bullets.push(b);
