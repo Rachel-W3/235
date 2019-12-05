@@ -18,7 +18,6 @@ const app = new PIXI.Application({
     // height: 720,
     backgroundColor: 0x1f79b9
 });
-
 document.body.appendChild(app.view);
 
 // Listen for window resize events
@@ -73,6 +72,18 @@ function gameSetup() {
     gameOverScene = new PIXI.Container();
     gameOverScene.visible = false;
     stage.addChild(gameOverScene);
+
+    // Full screen background image
+    let containerSize = {x: sceneWidth, y: sceneHeight};
+    let renderer = PIXI.autoDetectRenderer(containerSize.x,containerSize.y);
+    document.body.appendChild(renderer.view);
+
+    PIXI.loader.add("images/blue-skies-background.jpg").load(function () {   
+        let slide = background(containerSize, new PIXI.Sprite.fromImage("images/blue-skies-background.jpg"),'cover');        
+        gameScene.addChild(slide.gameScene);
+        // force resize: slide.doResize();
+        renderer.render(stage);
+    });
     
     createLabelsAndButtons();
 
