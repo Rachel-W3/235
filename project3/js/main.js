@@ -14,7 +14,6 @@ const sceneHeight = app.view.height;
 
 PIXI.loader.
 add(["images/angel.png"]).
-on("progress",e=>{console.log(`progress=${e.progress}`)}).
 load(gameSetup);
 
 // aliases
@@ -84,11 +83,17 @@ function gameLoop() {
     // Calculating delta time
     let dt = 1/app.ticker.FPS;
     if (dt > 1/12) dt = 1/12;
+
+    spawnMeteor(dt);
 }
 
 function increaseScoreBy(value) {
     score += value;
     scoreLabel.text = `Height: ${score}m`;
+}
+
+function spawnMeteor(rate) {
+    
 }
 
 // https://codepen.io/SkuliOskarsson/pen/ZbJKVW
