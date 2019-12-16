@@ -9,6 +9,7 @@ window.addEventListener('keyup', function(e) {
     keyState[e.keyCode || e.which] = false;
 }, true);
 
+// Source code: https://jsfiddle.net/bigtimebuddy/oaLwp0p9/
 // Try getting application to either fit whole screen or 
 // open in a new window resized to its resolution
 const app = new PIXI.Application({
@@ -35,7 +36,16 @@ resize();
 // constants
 const sceneWidth = app.screen.width;
 const sceneHeight = app.screen.height;
-const minCoolDown = 50;
+const minCoolDown = 10;
+const bgImage = PIXI.Texture.from("images/blue-skies-background.jpg");
+
+const sky = new PIXI.TilingSprite(
+    bgImage,
+    app.screen.width,
+    app.screen.height,
+);
+sky.tilePosition.y = sky.height;
+app.stage.addChild(sky);
 
 PIXI.loader.
 add(["images/angel.png"]).
@@ -46,7 +56,7 @@ let stage;
 
 // game variables
 let startScene;
-let gameScene,angel,scoreLabel,gameOverScoreLabel;
+let gameScene,angel,angelHitArea,scoreLabel,gameOverScoreLabel;
 let gameOverScene;
 
 let meteors = [];
@@ -76,10 +86,23 @@ function gameSetup() {
     
     createLabelsAndButtons();
 
-    // Creating angel
-    angel = new Angel(sceneWidth / 2, sceneHeight - 100);
+    // Creating angel + forgiving hitbox
+    angel = new Angel(sceneWidth / 2, sceneHeight - 150);
     angel.scale.set(sceneWidth * 0.00015);
+    angel.hitArea.width = angel.width * 0.08;
+    angel.hitArea.height = angel.height / 2;
+    // Since there's no way to anchor the hitArea's origin point at its center,
+    // it has to manually be repositioned
+    angel.hitArea.x = angel.position.x - angel.hitArea.width / 2;
+    angel.hitArea.y = angel.position.y - angel.hitArea.height / 2;
     gameScene.addChild(angel);
+
+    // Debugging - creating angel hitArea
+    angelHitArea = new PIXI.Graphics();
+    angelHitArea.beginFill(0xFF0000, 0.5);
+    angelHitArea.drawRect(0, angel.hitArea.y, angel.hitArea.width, angel.hitArea.height);
+    angelHitArea.endFill();
+    gameScene.addChild(angelHitArea);
 
     // // Add keydown event listener to our document
     // document.addEventListener('keydown', onKeyDown);
@@ -160,7 +183,7 @@ function startGame() {
     levelNum = 1;
     score = 0;
     meteorCount = 0;
-    spawnCoolDown = 200;
+    spawnCoolDown = 100;
     elapsedFrames = 0;
     angel.x = sceneWidth / 2;
     loadLevel();
@@ -174,11 +197,15 @@ function gameLoop() {
     // let dt = 1/app.ticker.FPS;
     // if (dt > 1/12) dt = 1/12;
     
+    sky.tilePosition.y += 1;
     
     // Keeping angel within screen
-    let currentX = angel.x;
+    let angel_x = angel.x;
+    let hitbox_x = angel.hitArea.x;
     // let currentY = angel.y;
-    angel.x = clamp(currentX, 0 + angel.width / 2, sceneWidth - angel.width / 2);
+    angel.x = clamp(angel_x, 0 + angel.width / 2, sceneWidth - angel.width / 2);
+    angel.hitArea.x = clamp(hitbox_x, 0 + angel.width / 2 - angel.hitArea.width / 2, sceneWidth - angel.width / 2 - angel.hitArea.width / 2);
+    angelHitArea.x = angel.hitArea.x; // debugging - keeps visual hitbox aligned with actual hitarea
     // Since vertical movement is not yet implemented, this isn't needed
     // angel.y = clamp(currentY, 0 + angel.height / 2, sceneHeight - angel.height);
     
@@ -207,7 +234,7 @@ function gameLoop() {
 
     // Collision detection
     for(let m of meteors) {
-        if(m.isAlive && rectsIntersect(m, angel)) {
+        if(m.isAlive && rectsIntersect(m, angel.hitArea)) {
             if (angel.isVulnerable) {
                 end();
                 return;
@@ -282,11 +309,13 @@ function getUserInput() {
     // A = 65
     if (keyState[37] || keyState[65]){
         angel.position.x -= distance;
+        angel.hitArea.x -= distance;
     }    
     // Right = 39
     // D = 68
     if (keyState[39] || keyState[68]){
         angel.position.x += distance;
+        angel.hitArea.x += distance;
     }
     // Space key = 32
     if (keyState[32] && startScene.visible) {

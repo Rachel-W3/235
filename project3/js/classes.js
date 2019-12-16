@@ -9,6 +9,7 @@ class Angel extends PIXI.Sprite {
         this.isVulnerable = true;
         this.speed = 0.1;
         this.maxSpeed = 1;
+        this.hitArea = new PIXI.Rectangle(0, 0, 0, 0);
     }
 }
 
