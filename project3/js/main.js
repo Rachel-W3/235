@@ -160,7 +160,7 @@ function startGame() {
     levelNum = 1;
     score = 0;
     meteorCount = 0;
-    spawnCoolDown = 375;
+    spawnCoolDown = 200;
     elapsedFrames = 0;
     angel.x = sceneWidth / 2;
     loadLevel();
