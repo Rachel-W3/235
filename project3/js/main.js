@@ -15,8 +15,6 @@ window.addEventListener('keyup', function(e) {
 const app = new PIXI.Application({
     autoResize: true,
     resolution: devicePixelRatio,
-    // width: 1280,
-    // height: 720,
     backgroundColor: 0x7491BE
 });
 
@@ -316,7 +314,6 @@ function gameLoop() {
     // If all meteors for the level have fallen, level up
     if (meteorCount >= 5 * levelNum) {
         levelNum++;
-        console.log("level: " + levelNum);
         loadLevel();
     }
 
@@ -392,7 +389,6 @@ function spawnMeteor() {
     // Meteors always spawn from the top
     meteors.push(m);
     gameScene.addChild(m);
-    // console.log(meteors.length + ", " + meteorCount + ", " + spawnCoolDown + ", " + m.speed + ", " + angel.speed);
 }
 
 function end() {
