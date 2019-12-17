@@ -1,6 +1,6 @@
-class Angel extends PIXI.Sprite {
-    constructor(x = 0, y = 0, texture) {
-        super(texture);
+class Angel extends PIXI.extras.AnimatedSprite {
+    constructor(x = 0, y = 0, textures) {
+        super(textures);
         this.anchor.set(.5, .5);
         this.x = x;
         this.y = y;
@@ -10,6 +10,7 @@ class Angel extends PIXI.Sprite {
         this.speed = 0.1;
         this.maxSpeed = 1;
         this.hitArea = new PIXI.Rectangle(0, 0, 0, 0);
+        this.state = "flying";
     }
 }
 

@@ -17,7 +17,7 @@ const app = new PIXI.Application({
     resolution: devicePixelRatio,
     // width: 1280,
     // height: 720,
-    backgroundColor: 0x1f79b9
+    backgroundColor: 0x7f91be
 });
 
 document.body.appendChild(app.view);
@@ -37,8 +37,8 @@ resize();
 const sceneWidth = app.screen.width;
 const sceneHeight = app.screen.height;
 const minCoolDown = 10;
+const attackBarMax = 300;
 const bgImage = PIXI.Texture.from("images/blue-skies-background.jpg");
-
 const sky = new PIXI.TilingSprite(
     bgImage,
     app.screen.width,
@@ -48,7 +48,7 @@ sky.tilePosition.y = sky.height;
 app.stage.addChild(sky);
 
 PIXI.loader.
-add(["images/angel.png", "images/meteor.png"]).
+add(["images/angel.png", "images/meteor.png", "spritesheets/angel.json"]).
 load(gameSetup);
 
 // aliases
@@ -56,8 +56,9 @@ let stage;
 
 // game variables
 let startScene;
-let gameScene,angel,angelHitArea,scoreLabel,gameOverScoreLabel;
-let gameOverScene;
+let gameScene, scoreLabel, attackBar, atkDisabled, atkReadyLabel;
+let angel, angelHitArea, angelFrames = [];
+let gameOverScene, gameOverScoreLabel;
 
 let meteors = [];
 let meteorCount;
@@ -85,16 +86,20 @@ function gameSetup() {
     stage.addChild(gameOverScene);
     
     createLabelsAndButtons();
-    
+
+    angelFrames = PIXI.loader.resources["spritesheets/angel.json"];
     // Making a new Angel instance just for the start scene, because I can't seem
     // to add an instance to multiple containers.
-    let fallenAngel = new Angel(sceneWidth / 2, sceneHeight - 250, new PIXI.Texture.from("images/fallen.png"));
+    let fallenAngel = new PIXI.Sprite(angelFrames.textures["fallen.png"]);
+    fallenAngel.x = sceneWidth / 2;
+    fallenAngel.y = sceneHeight - 250;
     fallenAngel.scale.set(sceneWidth * 0.0002);
     startScene.addChild(fallenAngel);
 
     // Creating angel + forgiving hitbox
-    angel = new Angel(sceneWidth / 2, sceneHeight - 150, new PIXI.Texture.from("images/angel.png"));
-    angel.scale.set(sceneWidth * 0.00015);
+    angel = new Angel(sceneWidth / 2, sceneHeight - 150, angelFrames);
+    angel.animationSpeed = 1/2;
+    angel.scale.set(sceneWidth * 0.0002);
     angel.hitArea.width = angel.width * 0.08;
     angel.hitArea.height = angel.height / 2;
     // Since there's no way to anchor the hitArea's origin point at its center,
@@ -149,7 +154,7 @@ function createLabelsAndButtons() {
     quote.y = sceneHeight / 2 - 75;
     startScene.addChild(quote);
 
-    let startLabel = new PIXI.Text("Press Space to Fly");
+    let startLabel = new PIXI.Text("Press 'Space' to Fly");
     startLabel.style = new PIXI.TextStyle({
         fill: 0xFFFFFF,
         fontSize: 48,
@@ -173,6 +178,24 @@ function createLabelsAndButtons() {
     gameScene.addChild(scoreLabel);
     increaseScoreBy(0);
 
+    attackBar = new PIXI.Graphics();
+    attackBar.x = sceneWidth / 2 - 150;
+    attackBar.beginFill(0xFFFFFF, 0.8);
+    attackBar.drawRect(0, 0, 300, 30);
+    attackBar.endFill();
+    gameScene.addChild(attackBar);
+
+    atkReadyLabel = new PIXI.Text();
+    atkReadyLabel.style = new PIXI.TextStyle({
+        fill: 0xFFFFFF,
+        fontSize: 20,
+        fontFamily: 'Arial',
+        fontStyle: 'bold',
+    });
+    atkReadyLabel.x = attackBar.x;
+    atkReadyLabel.y = attackBar.height + 5;
+    gameScene.addChild(atkReadyLabel);
+
     // 3 - set up 'gameOverScene'
     let gameOverText = new PIXI.Text("Game Over");
     gameOverText.style = textStyle;
@@ -192,13 +215,31 @@ function startGame() {
     spawnCoolDown = 100;
     elapsedFrames = 0;
     angel.x = sceneWidth / 2;
+    attackBar.width = 0;
+    atkDisabled = true;
     loadLevel();
 }
 
 function gameLoop() {
+    rechargeAttack();
     getUserInput();
     if (paused) return;
 
+    // If angel is already invincible, prevent user from activating attack before next full recharge
+    if(!angel.isVulnerable) {
+        angel.alpha = 0.5; // debugging - will be replaced with animations
+        atkDisabled = true;
+
+        // If attack bar isn't empty yet, stay invincible and continue reducing attack bar
+        if (attackBar.width > 0) {
+            attackBar.width -= 0.06 * app.ticker.elapsedMS;
+        }
+        else {
+            // Otherwise, angel will become vulnerable once again
+            angel.isVulnerable = true;
+            angel.alpha = 1; // debugging
+        }
+    }
     // // Calculating delta time
     // let dt = 1/app.ticker.FPS;
     // if (dt > 1/12) dt = 1/12;
@@ -230,8 +271,7 @@ function gameLoop() {
         m.move();
     }
     
-    // If all meteors for the level have fallen
-    // level up
+    // If all meteors for the level have fallen, level up
     if (meteorCount >= 5 * levelNum) {
         levelNum++;
         console.log("level: " + levelNum);
@@ -274,6 +314,25 @@ function loadLevel() {
 function increaseScoreBy(value) {
     score += value;
     scoreLabel.text = `Height: ${score.toFixed(2)}m`;
+}
+
+function rechargeAttack() {
+    // Recharges attack bar by increasing its width by 20 pixels per second
+    if(attackBar.width < attackBarMax) {
+        atkReadyLabel.alpha = 0; // invisible if the attack is not ready
+        attackBar.width = attackBar.width + (0.02 * app.ticker.elapsedMS);
+    }
+    else {
+        atkReadyLabel.text = "Press 'Space' to Spin-Attack!";
+        atkReadyLabel.alpha = 1;
+        atkDisabled = false;
+    }
+}
+
+function activateInvincibility() {
+    // Sets angel to invincible
+    console.log("Angel is invincible");
+    angel.isVulnerable = false;
 }
 
 function spawnMeteor() {
@@ -324,8 +383,21 @@ function getUserInput() {
         angel.hitArea.x += distance;
     }
     // Space key = 32
-    if (keyState[32] && startScene.visible) {
-        startGame();
+    if (keyState[32]) {
+        // Start game with space bar
+        if (startScene.visible){
+            startGame();
+        }
+        // Or use spin-attack (shows error message if attack bar is not full)
+        else if (gameScene.visible) {
+            if (atkDisabled) {
+                atkReadyLabel.text = "Attack needs to be recharged!";
+                atkReadyLabel.alpha = 0.8;
+            }
+            else {
+                activateInvincibility();
+            }
+        }
     }
 }
 
