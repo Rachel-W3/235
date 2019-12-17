@@ -48,7 +48,7 @@ sky.tilePosition.y = sky.height;
 app.stage.addChild(sky);
 
 PIXI.loader.
-add(["images/angel.png"]).
+add(["images/angel.png", "images/meteor.png"]).
 load(gameSetup);
 
 // aliases

@@ -24,7 +24,7 @@ class Meteor extends PIXI.Sprite {
         // variables
         // this.fwd = {0:0, 1:1};
         this.radius = radius;
-        this.speed = 3;
+        this.speed = 10;
         this.maxSpeed = 25; 
         this.isAlive = true;
         Object.seal(this);
