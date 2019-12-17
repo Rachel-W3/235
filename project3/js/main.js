@@ -85,9 +85,15 @@ function gameSetup() {
     stage.addChild(gameOverScene);
     
     createLabelsAndButtons();
+    
+    // Making a new Angel instance just for the start scene, because I can't seem
+    // to add an instance to multiple containers.
+    let fallenAngel = new Angel(sceneWidth / 2, sceneHeight - 250, new PIXI.Texture.from("images/fallen.png"));
+    fallenAngel.scale.set(sceneWidth * 0.0002);
+    startScene.addChild(fallenAngel);
 
     // Creating angel + forgiving hitbox
-    angel = new Angel(sceneWidth / 2, sceneHeight - 150);
+    angel = new Angel(sceneWidth / 2, sceneHeight - 150, new PIXI.Texture.from("images/angel.png"));
     angel.scale.set(sceneWidth * 0.00015);
     angel.hitArea.width = angel.width * 0.08;
     angel.hitArea.height = angel.height / 2;

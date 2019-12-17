@@ -1,6 +1,6 @@
 class Angel extends PIXI.Sprite {
-    constructor(x = 0, y = 0) {
-        super(PIXI.loader.resources["images/angel.png"].texture);
+    constructor(x = 0, y = 0, texture) {
+        super(texture);
         this.anchor.set(.5, .5);
         this.x = x;
         this.y = y;
@@ -14,18 +14,16 @@ class Angel extends PIXI.Sprite {
 }
 
 // Need to change sprite to meteor
-class Meteor extends PIXI.Graphics {
+class Meteor extends PIXI.Sprite {
     constructor(radius, x = 0, y = 0) {
-        super();
-        this.beginFill(0xFF0000);
-        this.drawCircle(0, 0, radius);
-        this.endFill();
+        super(PIXI.loader.resources["images/meteor.png"].texture);
+        this.anchor.set(.5, .5);
         this.x = x;
         this.y = y;
-        this.radius = radius;
-
+        
         // variables
         // this.fwd = {0:0, 1:1};
+        this.radius = radius;
         this.speed = 3;
         this.maxSpeed = 25; 
         this.isAlive = true;
