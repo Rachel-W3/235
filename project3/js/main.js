@@ -17,7 +17,7 @@ const app = new PIXI.Application({
     resolution: devicePixelRatio,
     // width: 1280,
     // height: 720,
-    backgroundColor: 0x7f91be
+    backgroundColor: 0x7491BE
 });
 
 document.body.appendChild(app.view);
@@ -38,6 +38,13 @@ const sceneWidth = app.screen.width;
 const sceneHeight = app.screen.height;
 const minCoolDown = 10;
 const attackBarMax = 300;
+
+const angelFrames = [];
+for(let i = 0; i < 12; i++) {
+    let texture = PIXI.Texture.from(`images/angel/${i}.png`);
+    angelFrames.push(texture);
+}
+
 const bgImage = PIXI.Texture.from("images/blue-skies-background.jpg");
 const sky = new PIXI.TilingSprite(
     bgImage,
@@ -48,7 +55,7 @@ sky.tilePosition.y = sky.height;
 app.stage.addChild(sky);
 
 PIXI.loader.
-add(["images/angel.png", "images/meteor.png", "spritesheets/angel.json"]).
+add(["images/meteor.png"]).
 load(gameSetup);
 
 // aliases
@@ -57,8 +64,8 @@ let stage;
 // game variables
 let startScene;
 let gameScene, scoreLabel, attackBar, atkDisabled, atkReadyLabel;
-let angel, angelHitArea, angelFrames = [];
-let gameOverScene, gameOverScoreLabel;
+let angel, wingSound, shieldSound;
+let gameOverScene, gameOverScoreLabel, retryButton, returnHomeButton;
 
 let meteors = [];
 let meteorCount;
@@ -84,13 +91,11 @@ function gameSetup() {
     gameOverScene = new PIXI.Container();
     gameOverScene.visible = false;
     stage.addChild(gameOverScene);
-    
-    createLabelsAndButtons();
 
-    angelFrames = PIXI.loader.resources["spritesheets/angel.json"];
     // Making a new Angel instance just for the start scene, because I can't seem
     // to add an instance to multiple containers.
-    let fallenAngel = new PIXI.Sprite(angelFrames.textures["fallen.png"]);
+    let fallenAngel = new PIXI.Sprite.from("images/angel/fallen.png");
+    fallenAngel.anchor.set(0.5, 0.5);
     fallenAngel.x = sceneWidth / 2;
     fallenAngel.y = sceneHeight - 250;
     fallenAngel.scale.set(sceneWidth * 0.0002);
@@ -98,37 +103,30 @@ function gameSetup() {
 
     // Creating angel + forgiving hitbox
     angel = new Angel(sceneWidth / 2, sceneHeight - 150, angelFrames);
-    angel.animationSpeed = 1/2;
-    angel.scale.set(sceneWidth * 0.0002);
-    angel.hitArea.width = angel.width * 0.08;
-    angel.hitArea.height = angel.height / 2;
-    // Since there's no way to anchor the hitArea's origin point at its center,
-    // it has to manually be repositioned
-    angel.hitArea.x = angel.position.x - angel.hitArea.width / 2;
-    angel.hitArea.y = angel.position.y - angel.hitArea.height / 2;
+    angel.animationSpeed = 1/10; // Animation speed should match with the sound of wings
+    angel.scale.set(sceneWidth * 0.0003);
+    angel.y = sceneHeight - angel.height / 2;
     gameScene.addChild(angel);
+    angel.play();
 
-    // Debugging - creating angel hitArea
-    angelHitArea = new PIXI.Graphics();
-    angelHitArea.beginFill(0xFF0000, 0.5);
-    angelHitArea.drawRect(0, angel.hitArea.y, angel.hitArea.width, angel.hitArea.height);
-    angelHitArea.endFill();
-    gameScene.addChild(angelHitArea);
+    // Load sounds
+    wingSound = new Howl({
+        src: ['sounds/wings-flapping.mp3', 'sounds/wings-flapping.wav'],
+        loop: true,
+    });
 
-    // // Add keydown event listener to our document
-    // document.addEventListener('keydown', onKeyDown);
+    shieldSound = new Howl({
+        src: ['sounds/power-up.mp3', 'sounds/power-up.wav'],
+        volume: 0.1
+    });
+
+    createLabelsAndButtons();
 
     // Start update loop
     app.ticker.add(gameLoop);
 }
 
 function createLabelsAndButtons() {
-    // Buttons not yet implemented
-    // let buttonStyle = new PIXI.TextStyle({
-    //     fill: 0xFFFFFF,
-    //     fontSize: 20,
-    //     fontFamily: 'Arial'
-    // });
     
     // 1 - set up startscene
     let title = new PIXI.Text("FALLEN ANGEL");
@@ -157,12 +155,20 @@ function createLabelsAndButtons() {
     let startLabel = new PIXI.Text("Press 'Space' to Fly");
     startLabel.style = new PIXI.TextStyle({
         fill: 0xFFFFFF,
-        fontSize: 48,
+        fontSize: 40,
+        fontStyle: 'bold',
         fontFamily: 'Arial',
     });
     startLabel.x = sceneWidth / 2 - startLabel.width / 2;
     startLabel.y = sceneHeight / 2;
     startScene.addChild(startLabel);
+
+    let instructions = new PIXI.Sprite.from("images/instructions.png");
+    instructions.anchor.set(0.5, 0.5);
+    instructions.scale.set(sceneWidth * 0.0003);
+    instructions.x = sceneWidth / 2 - instructions.width / 2;
+    instructions.y = sceneHeight / 2 + angel.height / 2;
+    startScene.addChild(instructions);
 
     // 2 - set up 'gameScene'
     let textStyle = new PIXI.TextStyle({
@@ -197,11 +203,39 @@ function createLabelsAndButtons() {
     gameScene.addChild(atkReadyLabel);
 
     // 3 - set up 'gameOverScene'
-    let gameOverText = new PIXI.Text("Game Over");
-    gameOverText.style = textStyle;
-    gameOverText.x = sceneWidth / 2 - gameOverText.width / 2;
-    gameOverText.y = sceneHeight / 2 - gameOverText.height / 2;
-    gameOverScene.addChild(gameOverText);
+    gameOverScoreLabel = new PIXI.Text();
+    gameOverScoreLabel.style = textStyle;
+    gameOverScoreLabel.y = sceneHeight / 4;
+    gameOverScene.addChild(gameOverScoreLabel);
+
+    let buttonStyle = new PIXI.TextStyle({
+        fill: 0xCCCCCC,
+        fontSize: 25,
+        fontFamily: 'Arial',
+        fontStyle: 'bold'
+    });
+
+    retryButton = new PIXI.Text("Keep flying...?");
+    retryButton.style = buttonStyle;
+    retryButton.interactive = true;
+    retryButton.buttonMode = true;
+    retryButton.x = sceneWidth / 2 - retryButton.width / 2;
+    retryButton.y = sceneHeight / 2 - retryButton.height / 2;
+    retryButton.on("pointerup", startGame);
+    retryButton.on("pointerover", e=>e.target.alpha = 0.7);
+    retryButton.on("pointerout", e=>e.currentTarget.alpha = 1.0);
+    gameOverScene.addChild(retryButton);
+
+    returnHomeButton = new PIXI.Text("Return to Homepage");
+    returnHomeButton.style = buttonStyle;
+    returnHomeButton.interactive = true;
+    returnHomeButton.buttonMode = true;
+    returnHomeButton.x = sceneWidth / 2 - returnHomeButton.width / 2;
+    returnHomeButton.y = sceneHeight / 2 + retryButton.height;
+    returnHomeButton.on("pointerup", e=>window.location.href="index.html");
+    returnHomeButton.on("pointerover", e=>e.target.alpha = 0.7);
+    returnHomeButton.on("pointerout", e=>e.currentTarget.alpha = 1.0);
+    gameOverScene.addChild(returnHomeButton);
 }
 
 function startGame() {
@@ -215,8 +249,17 @@ function startGame() {
     spawnCoolDown = 100;
     elapsedFrames = 0;
     angel.x = sceneWidth / 2;
+    
+    angel.hitArea.width = angel.width * 0.08;
+    angel.hitArea.height = angel.height / 2.5;
+    // Since there's no way to anchor the hitArea's origin point at its center,
+    // it has to manually be repositioned
+    angel.hitArea.x = angel.position.x - angel.hitArea.width / 2;
+    angel.hitArea.y = angel.position.y - angel.hitArea.height / 2;
+
     attackBar.width = 0;
     atkDisabled = true;
+    wingSound.play();
     loadLevel();
 }
 
@@ -227,7 +270,7 @@ function gameLoop() {
 
     // If angel is already invincible, prevent user from activating attack before next full recharge
     if(!angel.isVulnerable) {
-        angel.alpha = 0.5; // debugging - will be replaced with animations
+        angel.tint = 0xFF0000; // maybe replace with animations if time allows it
         atkDisabled = true;
 
         // If attack bar isn't empty yet, stay invincible and continue reducing attack bar
@@ -237,7 +280,7 @@ function gameLoop() {
         else {
             // Otherwise, angel will become vulnerable once again
             angel.isVulnerable = true;
-            angel.alpha = 1; // debugging
+            angel.tint = 0xFFFFFF;
         }
     }
     // // Calculating delta time
@@ -252,7 +295,6 @@ function gameLoop() {
     // let currentY = angel.y;
     angel.x = clamp(angel_x, 0 + angel.width / 2, sceneWidth - angel.width / 2);
     angel.hitArea.x = clamp(hitbox_x, 0 + angel.width / 2 - angel.hitArea.width / 2, sceneWidth - angel.width / 2 - angel.hitArea.width / 2);
-    angelHitArea.x = angel.hitArea.x; // debugging - keeps visual hitbox aligned with actual hitarea
     // Since vertical movement is not yet implemented, this isn't needed
     // angel.y = clamp(currentY, 0 + angel.height / 2, sceneHeight - angel.height);
     
@@ -323,7 +365,7 @@ function rechargeAttack() {
         attackBar.width = attackBar.width + (0.02 * app.ticker.elapsedMS);
     }
     else {
-        atkReadyLabel.text = "Press 'Space' to Spin-Attack!";
+        atkReadyLabel.text = "Press 'Space' to activate shield!";
         atkReadyLabel.alpha = 1;
         atkDisabled = false;
     }
@@ -331,8 +373,8 @@ function rechargeAttack() {
 
 function activateInvincibility() {
     // Sets angel to invincible
-    console.log("Angel is invincible");
     angel.isVulnerable = false;
+    shieldSound.play();
 }
 
 function spawnMeteor() {
@@ -358,9 +400,13 @@ function end() {
     // clear out level
     meteors.forEach(m => gameScene.removeChild(m));
     meteors = [];
+    wingSound.stop();
 
     gameOverScene.visible = true;
     gameScene.visible = false;
+
+    gameOverScoreLabel.text = `You flew ${score.toFixed(2)}m high.`;
+    gameOverScoreLabel.x = sceneWidth / 2 - gameOverScoreLabel.width / 2;
 }
 
 function getUserInput() {
@@ -388,10 +434,10 @@ function getUserInput() {
         if (startScene.visible){
             startGame();
         }
-        // Or use spin-attack (shows error message if attack bar is not full)
+        // Or activate invincibility (shows error message if attack bar is not full)
         else if (gameScene.visible) {
             if (atkDisabled) {
-                atkReadyLabel.text = "Attack needs to be recharged!";
+                atkReadyLabel.text = "Shield needs to be recharged!";
                 atkReadyLabel.alpha = 0.8;
             }
             else {

@@ -10,7 +10,6 @@ class Angel extends PIXI.extras.AnimatedSprite {
         this.speed = 0.1;
         this.maxSpeed = 1;
         this.hitArea = new PIXI.Rectangle(0, 0, 0, 0);
-        this.state = "flying";
     }
 }
 
