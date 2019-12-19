@@ -14,9 +14,9 @@
         <h1>Rachel Wong</h1>
         <nav>
             <ul>
-                <li>Contact</li>
-                <li>About Me</li>
-                <li>Projects</li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#aboutme">About Me</a></li>
+                <li><a href="#projects">Projects</a></li>
             </ul>
         </nav>
     </header>
@@ -57,6 +57,7 @@
                 future, I intend to make my own game that will hopefully be of equal quality as those two
                 gems, but in the meantime, I aim to master the skills I will need to fulfill those goals.
             </p>
+            <button><a href="downloadable/WongRachel_Resume.pdf" download>Download Resume</a></button>
         </section>
 
         <section id="contact">
@@ -64,23 +65,19 @@
             <!-- <form method="post" action="<?php echo $_SERVER["PHP_SELF"];?>"> -->
             <form>
                 <div id="form-left">
-                    <label>Name</label>
-                    <input name="name" placeholder="First and Last name">
+                    <input name="name" placeholder="Name">
                     
-                    <label>Email</label>
-                    <input name="email" type="email" placeholder="person@sample.com">
-                    
-                    <!--Additional field-->
-                    <label>Subject</label>
-                    <input name="subject" placeholder="Type Here">
-                </div>
-                <div id="form-right">
-                    <label>Message</label>
-                    <textarea name="message" placeholder="Type Here"></textarea>
-                </div>
-                
-                <input id="submit" name="submit" type="submit" value="Submit">
+                    <input name="email" type="email" placeholder="Email">
+
+                    <input name="subject" placeholder="Subject">
             
+                </div>
+
+                <div id="form-right">
+                    <textarea name="message" placeholder="Message"></textarea>
+                </div>
+
+                <input id="submit" name="submit" type="submit" value="Submit">
             </form>
         </section>
 
