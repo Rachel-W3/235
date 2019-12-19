@@ -1,0 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#profile {
+    background-color: #7491be;
+    background: url('../images/blue-skies-background.jpg') no-repeat center center fixed;
+}
