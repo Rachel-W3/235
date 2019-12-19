@@ -9,10 +9,85 @@
     <title>Rachel Wong's Portfolio</title>
 </head>
 <body>
+
+    <header>
+        <h1>Rachel Wong</h1>
+        <nav>
+            <ul>
+                <li>Contact</li>
+                <li>About Me</li>
+                <li>Projects</li>
+            </ul>
+        </nav>
+    </header>
+
     <div id="container">
+
         <div id="profile">
-            
+            <img src="images/photo_ID_cropped.jpeg" alt="Photo of Rachel Wong">
+            <h1>The unicorn developer you've been looking for.</h1>
         </div>
+        
+        <div id="projects">
+            <h1>Projects</h1>
+            <section id="proj-gallery">
+                <div class="preview">
+                    <img src="images/project1.jpg" alt="Project 1">
+                    <h2>Project 1</h2>
+                </div>
+                <div class="preview">
+                    <img src="images/project2.jpg" alt="Project 2">
+                    <h2>Project 2</h2>
+                </div>
+                <div class="preview">
+                    <img src="images/project3.jpg" alt="Project 3">
+                    <h2>Project 3</h2>
+                </div>    
+            </section>
+        </div>
+
+        <section id="aboutme">
+            <h1>About Me</h1>
+            <p>
+                Hi there! I am a Game Design and Development student and I enjoy bringing things
+                to life with C# and Unity. Before coming to college, I've always had an interest
+                in both art and programming, so I figured what better way to have the best of both
+                worlds than in game design? Some of my favorite games include&nbsp;Divinity: Original Sin 2
+                and Undertale, both of which are strong RPGs with equally strong soundtracks. In the distant
+                future, I intend to make my own game that will hopefully be of equal quality as those two
+                gems, but in the meantime, I aim to master the skills I will need to fulfill those goals.
+            </p>
+        </section>
+
+        <section id="contact">
+            <h1>Contact</h1>
+            <!-- <form method="post" action="<?php echo $_SERVER["PHP_SELF"];?>"> -->
+            <form>
+                <div id="form-left">
+                    <label>Name</label>
+                    <input name="name" placeholder="First and Last name">
+                    
+                    <label>Email</label>
+                    <input name="email" type="email" placeholder="person@sample.com">
+                    
+                    <!--Additional field-->
+                    <label>Subject</label>
+                    <input name="subject" placeholder="Type Here">
+                </div>
+                <div id="form-right">
+                    <label>Message</label>
+                    <textarea name="message" placeholder="Type Here"></textarea>
+                </div>
+                
+                <input id="submit" name="submit" type="submit" value="Submit">
+            
+            </form>
+        </section>
+
+        <footer>
+            <p>Copyright &COPY; 2019 Rachel Wong. All rights reserved.</p>
+        </footer>
+
     </div>
 </body>
 </html>
